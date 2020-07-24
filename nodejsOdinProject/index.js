@@ -1,42 +1,27 @@
 const http = require("http");
 const fs = require("fs");
+const readfile = require("./readfile.js")
 
 http.createServer((req, res) => {
     switch (req.url) {
         case "/":
             res.writeHead(200, { "Content-Type": "text/html" });
-            fs.readFile("./index.html", (err, data) => {
-                if (err) throw err;
-                res.write(data);
-                return res.end()
-            });
+            readfile.writeHtml("./index.html", res)
             break;
 
         case "/about":
             res.writeHead(200, { "Content-Type": "text/html" });
-            fs.readFile("./about.html", (err, data) => {
-                if (err) throw err;
-                res.write(data);
-                return res.end()
-            });
+            readfile.writeHtml("./about.html", res)
             break;
 
         case "/contact-me":
             res.writeHead(200, { "Content-Type": "text/html" });
-            fs.readFile("./contact-me.html", (err, data) => {
-                if (err) throw err;
-                res.write(data);
-                return res.end()
-            });
+            readfile.writeHtml("./contact-me.html", res)
             break;
 
         default:
-            fs.readFile("./404.html", (err, data) => {
-                res.writeHead(404, { "Content-Type": "text/html" });
-                if (err) throw err;
-                res.write(data);
-                return res.end()
-            });
+            res.writeHead(404, { "Content-Type": "text/html" });
+            readfile.writeHtml("./404.html", res)
             break;
     };
 }).listen(8080);
